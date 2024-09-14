@@ -22,12 +22,13 @@ void reverse(Node *head, Node *tail)
     Node *i = head;
     Node *j = tail;
 
-    if (i != j && i->next != j)
+    while (i != j && i->next != j)
     {
         swap(i->value, j->value);
         i = i->next;
         j = j->prev;
     }
+    swap(i->value, j->value);
 }
 
 void print_normal(Node *head)

@@ -11,7 +11,9 @@ int main()
     my_list.back();
 
     /* আমরা যদি কোন নিদিষ্ট value দেখতে চাই তাহলে আমদের next(my_list.begin(),2)  এর মানে হোল আমারা আমাদের লিস্টের ২ নাম্বার ইনডেক্স এর value দেখতে চাই */
-    next(my_list.begin(), 2);
+    list<int>::iterator it;
+    it = next(my_list.begin(), 1);
+    cout << *it;
 
     return 0;
 }
