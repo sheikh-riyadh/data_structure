@@ -1,5 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
+
+vector<int> v1, v2;
+
 class Node
 {
 public:
@@ -52,27 +55,42 @@ Node *input_tree()
     return root;
 }
 
-int max_height(Node *root, int x)
+void check_is_tree_are_same(Node *root1, Node *root2, bool &flag)
 {
-    if (root == NULL)
-    {
-        return 0;
-    }
+    queue<Node *> q1, q2;
+    q1.push(root1);
+    q2.push(root2);
 
-    int l = max_height(root->left, x);
-    int r = max_height(root->right, x);
-    if (root->value == x)
+    while (!q1.empty())
     {
-        return max(l, r) + 1;
+        Node *parent1 = q1.front();
+        Node *parent2 = q2.front();
+        q1.pop();
+        q2.pop();
+
+        if (parent1->value && parent2->value)
+        {
+            if (parent1->left->value == parent2->left->value && parent1->right->value == parent2->right->value)
+            {
+                flag = true;
+            }
+        }
+
+        if (parent1->left)
+            q1.push(parent1->left);
+        if (parent1->right)
+            q1.push(parent1->right);
+        if (parent2->left)
+            q2.push(parent2->left);
+        if (parent2->right)
+            q2.push(parent2->right);
     }
 }
 
 int main()
 {
-
+    int lvl = 0;
     Node *root = input_tree();
-    int x;
-    cin >> x;
-    cout << max_height(root, x);
+
     return 0;
 }

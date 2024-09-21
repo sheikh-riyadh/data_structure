@@ -15,14 +15,11 @@ public:
 
 Node *input_tree()
 {
+    Node *root = NULL;
     int v;
     cin >> v;
-    Node *root;
-    if (v == -1)
-        root = NULL;
-    else
+    if (v != -1)
         root = new Node(v);
-
     queue<Node *> q;
     if (root)
         q.push(root);
@@ -32,16 +29,16 @@ Node *input_tree()
         Node *p = q.front();
         q.pop();
 
-        Node *myLeft = NULL, *myRight = NULL;
+        Node *my_left = NULL, *my_right = NULL;
         int l, r;
         cin >> l >> r;
         if (l != -1)
-            myLeft = new Node(l);
+            my_left = new Node(l);
         if (r != -1)
-            myRight = new Node(r);
+            my_right = new Node(r);
 
-        p->left = myLeft;
-        p->right = myRight;
+        p->left = my_left;
+        p->right = my_right;
 
         if (p->left)
             q.push(p->left);
@@ -50,29 +47,36 @@ Node *input_tree()
     }
 
     return root;
-}
+};
 
-int max_height(Node *root, int x)
+void find_x(Node *root, int x, int &flag)
 {
     if (root == NULL)
     {
-        return 0;
+        return;
     }
-
-    int l = max_height(root->left, x);
-    int r = max_height(root->right, x);
     if (root->value == x)
     {
-        return max(l, r) + 1;
+        flag = 1;
+        return;
     }
-}
+    find_x(root->left, x, flag);
+    find_x(root->right, x, flag);
+};
 
 int main()
 {
 
+    int flag = 0;
+
     Node *root = input_tree();
     int x;
     cin >> x;
-    cout << max_height(root, x);
+
+    find_x(root, x, flag);
+    if (flag)
+        cout << "True" << endl;
+    else
+        cout << "False" << endl;
     return 0;
 }

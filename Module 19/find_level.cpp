@@ -52,27 +52,44 @@ Node *input_tree()
     return root;
 }
 
-int max_height(Node *root, int x)
+void find_lavel(Node *root, int x, int &lvl)
 {
+
     if (root == NULL)
     {
-        return 0;
+        return;
     }
+    queue<pair<Node *, int>> q;
+    q.push({root, 1});
 
-    int l = max_height(root->left, x);
-    int r = max_height(root->right, x);
-    if (root->value == x)
+    while (!q.empty())
     {
-        return max(l, r) + 1;
+        pair<Node *, int> parent = q.front();
+        Node *n = parent.first;
+        int lavel = parent.second;
+        q.pop();
+
+        if (n->value == x)
+        {
+            lvl = lavel;
+            return;
+        }
+
+        if (n->left)
+            q.push({n->left, lavel + 1});
+        if (n->right)
+            q.push({n->right, lavel + 1});
     }
 }
 
 int main()
 {
-
+    int lvl = 0;
     Node *root = input_tree();
     int x;
     cin >> x;
-    cout << max_height(root, x);
+    find_lavel(root, x, lvl);
+
+    cout << lvl << endl;
     return 0;
 }
